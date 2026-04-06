@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThorUI Reference App - Design System Preview</title>
+    <style>
+        :root {
+            /* Brand Colors */
+            --color-primary: #5677fc;
+            --color-primary-light: #5c8dff;
+            --color-primary-dark: #4a67d6;
+            --color-success: #19be6b;
+            --color-warning: #ff7900;
+            --color-error: #EB0909;
+            --color-pink: #f74d54;
+            --color-link: #586c94;
+
+            /* Text Colors */
+            --color-title: #333333;
+            --color-body: #333333;
+            --color-secondary: #555555;
+            --color-muted: #999999;
+            --color-placeholder: #bfbfbf;
+            --color-disabled: #c0c0c0;
+            --color-inverse: #ffffff;
+
+            /* Background Colors */
+            --color-bg-page: #fafafa;
+            --color-bg-card: #ffffff;
+            --color-bg-hover: #f1f1f1;
+            --color-bg-mask: rgba(0,0,0,0.4);
+            --color-bg-grey: #f5f5f5;
+
+            /* Border Colors */
+            --color-border: #eaeef1;
+            --color-border-light: #f5f5f5;
+
+            /* Spacing */
+            --space-xs: 8rpx;
+            --space-sm: 16rpx;
+            --space-base: 20rpx;
+            --space-lg: 24rpx;
+            --space-xl: 32rpx;
+            --space-xxl: 48rpx;
+
+            /* Border Radius */
+            --radius-sm: 4rpx;
+            --radius-base: 6rpx;
+            --radius-lg: 12rpx;
+            --radius-xl: 24rpx;
+            --radius-full: 50%;
+            --radius-pill: 9999rpx;
+
+            /* Shadows */
+            --shadow-card: 0 2rpx 8rpx rgba(0,0,0,0.08);
+            --shadow-elevated: 0 4rpx 16rpx rgba(0,0,0,0.12);
+            --shadow-modal: 0 8rpx 32rpx rgba(0,0,0,0.16);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, Helvetica Neue, Helvetica, sans-serif;
+            background: var(--color-bg-page);
+            color: var(--color-body);
+            font-size: 28rpx;
+            line-height: 1.5;
+            padding: 32rpx;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 40rpx;
+            font-weight: 600;
+            color: var(--color-title);
+            margin-bottom: 32rpx;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 32rpx;
+            font-weight: 600;
+            color: var(--color-title);
+            margin: 48rpx 0 24rpx;
+            padding-bottom: 16rpx;
+            border-bottom: 1rpx solid var(--color-border);
+        }
+
+        h3 {
+            font-size: 28rpx;
+            font-weight: 600;
+            color: var(--color-title);
+            margin: 24rpx 0 16rpx;
+        }
+
+        /* Section */
+        .section {
+            background: var(--color-bg-card);
+            border-radius: var(--radius-lg);
+            padding: 32rpx;
+            margin-bottom: 24rpx;
+            box-shadow: var(--shadow-card);
+        }
+
+        /* Color Grid */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140rpx, 1fr));
+            gap: 16rpx;
+        }
+
+        .color-swatch {
+            border-radius: var(--radius-base);
+            overflow: hidden;
+            background: var(--color-bg-card);
+            border: 1rpx solid var(--color-border);
+        }
+
+        .color-preview {
+            height: 80rpx;
+        }
+
+        .color-info {
+            padding: 12rpx;
+        }
+
+        .color-name {
+            font-size: 22rpx;
+            font-weight: 500;
+            color: var(--color-title);
+        }
+
+        .color-value {
+            font-size: 20rpx;
+            color: var(--color-muted);
+            font-family: monospace;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16rpx;
+            margin-top: 16rpx;
+        }
+
+        .btn {
+            padding: 24rpx 48rpx;
+            border: none;
+            border-radius: 44rpx;
+            font-size: 32rpx;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary {
+            background: linear-gradient(-90deg, var(--color-primary), var(--color-primary-light));
+            color: var(--color-inverse);
+            height: 90rpx;
+        }
+
+        .btn-secondary {
+            background: var(--color-bg-card);
+            border: 1rpx solid var(--color-border);
+            color: var(--color-title);
+            height: 88rpx;
+        }
+
+        .btn-gray {
+            background: #ededed;
+            color: var(--color-muted);
+            height: 88rpx;
+        }
+
+        .btn-text {
+            background: transparent;
+            color: var(--color-primary);
+            padding: 16rpx 24rpx;
+        }
+
+        .btn-disabled {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .btn-small {
+            padding: 16rpx 32rpx;
+            font-size: 28rpx;
+            height: auto;
+            border-radius: 6rpx;
+        }
+
+        /* Tags */
+        .tag-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12rpx;
+            margin-top: 16rpx;
+        }
+
+        .tag {
+            padding: 8rpx 16rpx;
+            border-radius: var(--radius-sm);
+            font-size: 24rpx;
+        }
+
+        .tag-primary {
+            background: rgba(86, 119, 252, 0.1);
+            color: var(--color-primary);
+        }
+
+        .tag-success {
+            background: rgba(25, 190, 107, 0.1);
+            color: var(--color-success);
+        }
+
+        .tag-warning {
+            background: rgba(255, 121, 0, 0.1);
+            color: var(--color-warning);
+        }
+
+        .tag-error {
+            background: rgba(235, 9, 9, 0.1);
+            color: var(--color-error);
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 36rpx;
+            height: 36rpx;
+            padding: 0 10rpx;
+            background: var(--color-error);
+            color: var(--color-inverse);
+            border-radius: 18rpx;
+            font-size: 22rpx;
+        }
+
+        .badge-primary {
+            background: var(--color-primary);
+        }
+
+        /* Card */
+        .card {
+            background: var(--color-bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            padding: 24rpx;
+            margin: var(--space-lg);
+        }
+
+        .card-title {
+            font-size: 32rpx;
+            font-weight: 600;
+            color: var(--color-title);
+            margin-bottom: 12rpx;
+        }
+
+        .card-content {
+            font-size: 28rpx;
+            color: var(--color-secondary);
+            line-height: 1.6;
+        }
+
+        /* List */
+        .list {
+            background: var(--color-bg-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .list-cell {
+            padding: 24rpx 30rpx;
+            border-bottom: 1rpx solid var(--color-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.2s;
+        }
+
+        .list-cell:active {
+            background: var(--color-bg-hover);
+        }
+
+        .list-cell:last-child {
+            border-bottom: none;
+        }
+
+        .list-content {
+            display: flex;
+            align-items: center;
+            gap: 16rpx;
+        }
+
+        .list-icon {
+            width: 80rpx;
+            height: 80rpx;
+            background: var(--color-bg-grey);
+            border-radius: var(--radius-base);
+        }
+
+        .list-text h4 {
+            font-size: 28rpx;
+            font-weight: 500;
+            color: var(--color-title);
+            margin-bottom: 4rpx;
+        }
+
+        .list-text p {
+            font-size: 24rpx;
+            color: var(--color-muted);
+        }
+
+        .arrow {
+            color: var(--color-muted);
+            font-size: 32rpx;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 24rpx;
+        }
+
+        .form-label {
+            font-size: 28rpx;
+            color: var(--color-title);
+            margin-bottom: 12rpx;
+            display: block;
+        }
+
+        .input {
+            width: 100%;
+            height: 96rpx;
+            padding: 0 24rpx;
+            border: 1rpx solid var(--color-border);
+            border-radius: var(--radius-base);
+            font-size: 28rpx;
+            background: var(--color-bg-card);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input:focus {
+            border-color: var(--color-primary);
+        }
+
+        .input::placeholder {
+            color: var(--color-placeholder);
+        }
+
+        .textarea {
+            min-height: 200rpx;
+            padding: 24rpx;
+            border: 1rpx solid var(--color-border);
+            border-radius: var(--radius-base);
+            font-size: 28rpx;
+            background: var(--color-bg-card);
+            outline: none;
+            resize: none;
+        }
+
+        /* Divider */
+        .divider {
+            height: 1rpx;
+            background: var(--color-border);
+            margin: 24rpx 0;
+        }
+
+        .divider-dashed {
+            height: 1rpx;
+            background: repeating-linear-gradient(
+                90deg,
+                var(--color-border) 0,
+                var(--color-border) 8rpx,
+                transparent 8rpx,
+                transparent 16rpx
+            );
+            margin: 24rpx 0;
+        }
+
+        /* Spacing */
+        .spacing-demo {
+            display: flex;
+            align-items: center;
+            gap: 16rpx;
+            margin-bottom: 16rpx;
+        }
+
+        .spacing-box {
+            background: var(--color-primary);
+            opacity: 0.3;
+        }
+
+        .spacing-label {
+            font-size: 24rpx;
+            color: var(--color-muted);
+            min-width: 120rpx;
+        }
+
+        /* Radius */
+        .radius-demo {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16rpx;
+            margin-top: 16rpx;
+        }
+
+        .radius-box {
+            width: 80rpx;
+            height: 80rpx;
+            background: var(--color-primary);
+            opacity: 0.6;
+        }
+
+        .radius-sm { border-radius: var(--radius-sm); }
+        .radius-base { border-radius: var(--radius-base); }
+        .radius-lg { border-radius: var(--radius-lg); }
+        .radius-xl { border-radius: var(--radius-xl); }
+        .radius-full { border-radius: var(--radius-full); }
+
+        /* Shadow */
+        .shadow-demo {
+            display: flex;
+            gap: 24rpx;
+            margin-top: 16rpx;
+        }
+
+        .shadow-box {
+            flex: 1;
+            height: 120rpx;
+            background: var(--color-bg-card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22rpx;
+            color: var(--color-muted);
+        }
+
+        .shadow-card { box-shadow: var(--shadow-card); }
+        .shadow-elevated { box-shadow: var(--shadow-elevated); }
+        .shadow-modal { box-shadow: var(--shadow-modal); }
+
+        /* Typography Scale */
+        .type-display {
+            font-size: 40rpx;
+            font-weight: 600;
+            color: var(--color-title);
+            line-height: 1.2;
+        }
+
+        .type-h1 {
+            font-size: 36rpx;
+            font-weight: 600;
+            color: var(--color-title);
+            line-height: 1.3;
+        }
+
+        .type-h2 {
+            font-size: 32rpx;
+            font-weight: 600;
+            color: var(--color-title);
+            line-height: 1.3;
+        }
+
+        .type-h3 {
+            font-size: 28rpx;
+            font-weight: 600;
+            color: var(--color-title);
+            line-height: 1.4;
+        }
+
+        .type-body {
+            font-size: 28rpx;
+            color: var(--color-body);
+            line-height: 1.5;
+        }
+
+        .type-caption {
+            font-size: 24rpx;
+            color: var(--color-muted);
+            line-height: 1.4;
+        }
+
+        .type-overline {
+            font-size: 20rpx;
+            font-weight: 500;
+            color: var(--color-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* TabBar Preview */
+        .tabbar-preview {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100rpx;
+            background: var(--color-bg-card);
+            border-top: 1rpx solid var(--color-border);
+            display: flex;
+            padding-bottom: 34rpx;
+        }
+
+        .tabbar-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4rpx;
+        }
+
+        .tabbar-icon {
+            width: 52rpx;
+            height: 52rpx;
+            background: var(--color-bg-grey);
+            border-radius: var(--radius-base);
+        }
+
+        .tabbar-icon.active {
+            background: rgba(86, 119, 252, 0.1);
+        }
+
+        .tabbar-text {
+            font-size: 20rpx;
+            color: var(--color-muted);
+        }
+
+        .tabbar-text.active {
+            color: var(--color-primary);
+        }
+
+        .preview-footer {
+            height: 134rpx;
+        }
+    </style>
+</head>
+<body>
+    <h1>ThorUI Reference App</h1>
+
+    <!-- Colors - Brand -->
+    <h2>Brand Colors</h2>
+    <div class="section">
+        <div class="color-grid">
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #5677fc;"></div>
+                <div class="color-info">
+                    <div class="color-name">Primary</div>
+                    <div class="color-value">#5677fc</div>
+                </div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #5c8dff;"></div>
+                <div class="color-info">
+                    <div class="color-name">Primary Light</div>
+                    <div class="color-value">#5c8dff</div>
+                </div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #19be6b;"></div>
+                <div class="color-info">
+                    <div class="color-name">Success</div>
+                    <div class="color-value">#19be6b</div>
+                </div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #ff7900;"></div>
+                <div class="color-info">
+                    <div class="color-name">Warning</div>
+                    <div class="color-value">#ff7900</div>
+                </div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #EB0909;"></div>
+                <div class="color-info">
+                    <div class="color-name">Error</div>
+                    <div class="color-value">#EB0909</div>
+                </div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #f74d54;"></div>
+                <div class="color-info">
+                    <div class="color-name">Pink</div>
+                    <div class="color-value">#f74d54</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Colors - Text -->
+    <h2>Text Colors</h2>
+    <div class="section">
+        <div class="color-grid">
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #333333;"></div>
+                <div class="color-info">
+                    <div class="color-name">Title</div>
+                    <div class="color-value">#333333</div>
+                </div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #555555;"></div>
+                <div class="color-info">
+                    <div class="color-name">Secondary</div>
+                    <div class="color-value">#555555</div>
+                </div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #999999;"></div>
+                <div class="color-info">
+                    <div class="color-name">Muted</div>
+                    <div class="color-value">#999999</div>
+                </div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #bfbfbf;"></div>
+                <div class="color-info">
+                    <div class="color-name">Placeholder</div>
+                    <div class="color-value">#bfbfbf</div>
+                </div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #c0c0c0;"></div>
+                <div class="color-info">
+                    <div class="color-name">Disabled</div>
+                    <div class="color-value">#c0c0c0</div>
+                </div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #586c94;"></div>
+                <div class="color-info">
+                    <div class="color-name">Link</div>
+                    <div class="color-value">#586c94</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Typography -->
+    <h2>Typography</h2>
+    <div class="section">
+        <div class="type-display">Display (40rpx)</div>
+        <div class="divider"></div>
+        <div class="type-h1">Heading 1 (36rpx)</div>
+        <div class="divider"></div>
+        <div class="type-h2">Heading 2 (32rpx)</div>
+        <div class="divider"></div>
+        <div class="type-h3">Heading 3 (28rpx)</div>
+        <div class="divider"></div>
+        <div class="type-body">Body Text (28rpx) - Main content of the application</div>
+        <div class="divider"></div>
+        <div class="type-caption">Caption (24rpx) - Secondary information, timestamps</div>
+        <div class="divider"></div>
+        <div class="type-overline">Overline (20rpx) - Labels and tags</div>
+    </div>
+
+    <!-- Buttons -->
+    <h2>Buttons</h2>
+    <div class="section">
+        <div class="button-group">
+            <button class="btn btn-primary">Primary</button>
+            <button class="btn btn-secondary">Secondary</button>
+            <button class="btn btn-gray">Gray</button>
+            <button class="btn btn-text">Text</button>
+            <button class="btn btn-primary btn-disabled">Disabled</button>
+        </div>
+        <div class="divider"></div>
+        <h3>Small Buttons</h3>
+        <div class="button-group">
+            <button class="btn btn-primary btn-small">Primary</button>
+            <button class="btn btn-secondary btn-small">Secondary</button>
+            <button class="btn btn-text btn-small">Text</button>
+        </div>
+    </div>
+
+    <!-- Tags & Badges -->
+    <h2>Tags & Badges</h2>
+    <div class="section">
+        <div class="tag-group">
+            <span class="tag tag-primary">Primary</span>
+            <span class="tag tag-success">Success</span>
+            <span class="tag tag-warning">Warning</span>
+            <span class="tag tag-error">Error</span>
+        </div>
+        <div class="divider"></div>
+        <h3>Badges</h3>
+        <div class="tag-group">
+            <span class="badge badge-primary">5</span>
+            <span class="badge">99+</span>
+            <span class="badge" style="background: #19be6b;">NEW</span>
+        </div>
+    </div>
+
+    <!-- Card -->
+    <h2>Card</h2>
+    <div class="card">
+        <div class="card-title">Card Title</div>
+        <div class="card-content">
+            This is the card content area. Cards are used to group related content and actions within the application.
+        </div>
+    </div>
+
+    <!-- List -->
+    <h2>List Items</h2>
+    <div class="section" style="padding: 0;">
+        <div class="list">
+            <div class="list-cell">
+                <div class="list-content">
+                    <div class="list-icon"></div>
+                    <div class="list-text">
+                        <h4>List Item Title</h4>
+                        <p>List item description <span class="badge">3</span></p>
+                    </div>
+                </div>
+                <span class="arrow">›</span>
+            </div>
+            <div class="list-cell">
+                <div class="list-content">
+                    <div class="list-icon"></div>
+                    <div class="list-text">
+                        <h4>Account Settings</h4>
+                        <p>Manage your account</p>
+                    </div>
+                </div>
+                <span class="arrow">›</span>
+            </div>
+            <div class="list-cell">
+                <div class="list-content">
+                    <div class="list-icon"></div>
+                    <div class="list-text">
+                        <h4>Notifications</h4>
+                        <p>Configure alerts</p>
+                    </div>
+                </div>
+                <span class="arrow">›</span>
+            </div>
+            <div class="list-cell">
+                <div class="list-content">
+                    <div class="list-icon"></div>
+                    <div class="list-text">
+                        <h4>About</h4>
+                        <p>Version 1.0.0</p>
+                    </div>
+                </div>
+                <span class="arrow">›</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form -->
+    <h2>Form Inputs</h2>
+    <div class="section">
+        <div class="form-group">
+            <label class="form-label">Default Input</label>
+            <input type="text" class="input" placeholder="Please enter text...">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Focused Input</label>
+            <input type="text" class="input" value="Focused state" style="border-color: #5677fc;">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Textarea</label>
+            <textarea class="textarea" placeholder="Enter description..."></textarea>
+        </div>
+    </div>
+
+    <!-- Dividers -->
+    <h2>Dividers</h2>
+    <div class="section">
+        <div class="type-body">Before divider</div>
+        <div class="divider"></div>
+        <div class="type-body">After divider (solid)</div>
+        <div class="divider-dashed"></div>
+        <div class="type-body">After divider (dashed)</div>
+    </div>
+
+    <!-- Spacing -->
+    <h2>Spacing Scale</h2>
+    <div class="section">
+        <div class="spacing-demo">
+            <span class="spacing-label">xs (8rpx)</span>
+            <div class="spacing-box" style="width: 8rpx; height: 32rpx;"></div>
+        </div>
+        <div class="spacing-demo">
+            <span class="spacing-label">sm (16rpx)</span>
+            <div class="spacing-box" style="width: 16rpx; height: 32rpx;"></div>
+        </div>
+        <div class="spacing-demo">
+            <span class="spacing-label">base (20rpx)</span>
+            <div class="spacing-box" style="width: 20rpx; height: 32rpx;"></div>
+        </div>
+        <div class="spacing-demo">
+            <span class="spacing-label">lg (24rpx)</span>
+            <div class="spacing-box" style="width: 24rpx; height: 32rpx;"></div>
+        </div>
+        <div class="spacing-demo">
+            <span class="spacing-label">xl (32rpx)</span>
+            <div class="spacing-box" style="width: 32rpx; height: 32rpx;"></div>
+        </div>
+        <div class="spacing-demo">
+            <span class="spacing-label">xxl (48rpx)</span>
+            <div class="spacing-box" style="width: 48rpx; height: 32rpx;"></div>
+        </div>
+    </div>
+
+    <!-- Border Radius -->
+    <h2>Border Radius</h2>
+    <div class="section">
+        <div class="radius-demo">
+            <div style="text-align: center;">
+                <div class="radius-box radius-sm"></div>
+                <div style="font-size: 20rpx; color: #999; margin-top: 8rpx;">sm (4rpx)</div>
+            </div>
+            <div style="text-align: center;">
+                <div class="radius-box radius-base"></div>
+                <div style="font-size: 20rpx; color: #999; margin-top: 8rpx;">base (6rpx)</div>
+            </div>
+            <div style="text-align: center;">
+                <div class="radius-box radius-lg"></div>
+                <div style="font-size: 20rpx; color: #999; margin-top: 8rpx;">lg (12rpx)</div>
+            </div>
+            <div style="text-align: center;">
+                <div class="radius-box radius-xl"></div>
+                <div style="font-size: 20rpx; color: #999; margin-top: 8rpx;">xl (24rpx)</div>
+            </div>
+            <div style="text-align: center;">
+                <div class="radius-box radius-full"></div>
+                <div style="font-size: 20rpx; color: #999; margin-top: 8rpx;">full (50%)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shadows -->
+    <h2>Shadows</h2>
+    <div class="section">
+        <div class="shadow-demo">
+            <div class="shadow-box shadow-card">Card</div>
+            <div class="shadow-box shadow-elevated">Elevated</div>
+            <div class="shadow-box shadow-modal">Modal</div>
+        </div>
+    </div>
+
+    <!-- Preview Footer -->
+    <div class="preview-footer"></div>
+
+    <!-- TabBar Preview -->
+    <div class="tabbar-preview">
+        <div class="tabbar-item">
+            <div class="tabbar-icon active"></div>
+            <span class="tabbar-text active">Home</span>
+        </div>
+        <div class="tabbar-item">
+            <div class="tabbar-icon"></div>
+            <span class="tabbar-text">Category</span>
+        </div>
+        <div class="tabbar-item">
+            <div class="tabbar-icon"></div>
+            <span class="tabbar-text">Cart</span>
+        </div>
+        <div class="tabbar-item">
+            <div class="tabbar-icon"></div>
+            <span class="tabbar-text">My</span>
+        </div>
+    </div>
+</body>
+</html>
