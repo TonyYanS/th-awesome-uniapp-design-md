@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[App Name] - Design System Preview</title>
+    <style>
+        :root {
+            /* Brand Colors */
+            --color-primary: #5677fc;
+            --color-primary-light: #5c8dff;
+            --color-success: #19be6b;
+            --color-warning: #ff7900;
+            --color-error: #EB0909;
+
+            /* Text Colors */
+            --color-title: #333333;
+            --color-body: #333333;
+            --color-secondary: #555555;
+            --color-muted: #999999;
+            --color-placeholder: #bfbfbf;
+            --color-disabled: #c0c0c0;
+
+            /* Background Colors */
+            --color-bg-page: #fafafa;
+            --color-bg-card: #ffffff;
+            --color-bg-hover: #f1f1f1;
+            --color-bg-mask: rgba(0,0,0,0.4);
+
+            /* Border Colors */
+            --color-border: #eaeef1;
+            --color-border-light: #f5f5f5;
+
+            /* Spacing */
+            --space-xs: 8rpx;
+            --space-sm: 16rpx;
+            --space-base: 20rpx;
+            --space-lg: 24rpx;
+            --space-xl: 32rpx;
+            --space-xxl: 48rpx;
+
+            /* Border Radius */
+            --radius-sm: 4rpx;
+            --radius-base: 6rpx;
+            --radius-lg: 12rpx;
+            --radius-xl: 24rpx;
+            --radius-full: 9999rpx;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, Helvetica Neue, Helvetica, sans-serif;
+            background: var(--color-bg-page);
+            color: var(--color-body);
+            font-size: 28rpx;
+            line-height: 1.5;
+            padding: 32rpx;
+        }
+
+        /* Typography */
+        .typography {
+            padding: 32rpx;
+            background: var(--color-bg-card);
+            border-radius: var(--radius-lg);
+            margin-bottom: 24rpx;
+        }
+
+        .typography h1 {
+            font-size: 40rpx;
+            font-weight: 600;
+            margin-bottom: 16rpx;
+            color: var(--color-title);
+        }
+
+        .typography h2 {
+            font-size: 36rpx;
+            font-weight: 600;
+            margin-bottom: 12rpx;
+            color: var(--color-title);
+        }
+
+        .typography p {
+            color: var(--color-secondary);
+            margin-bottom: 8rpx;
+        }
+
+        .typography .muted {
+            color: var(--color-muted);
+            font-size: 24rpx;
+        }
+
+        /* Color Swatches */
+        .color-section {
+            margin-bottom: 32rpx;
+        }
+
+        .section-title {
+            font-size: 28rpx;
+            font-weight: 600;
+            color: var(--color-title);
+            margin-bottom: 16rpx;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150rpx, 1fr));
+            gap: 16rpx;
+        }
+
+        .color-swatch {
+            border-radius: var(--radius-base);
+            overflow: hidden;
+            background: var(--color-bg-card);
+            box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.08);
+        }
+
+        .color-preview {
+            height: 100rpx;
+        }
+
+        .color-info {
+            padding: 12rpx;
+        }
+
+        .color-name {
+            font-size: 24rpx;
+            font-weight: 500;
+            color: var(--color-title);
+        }
+
+        .color-value {
+            font-size: 22rpx;
+            color: var(--color-muted);
+            font-family: monospace;
+        }
+
+        /* Buttons */
+        .button-section {
+            padding: 32rpx;
+            background: var(--color-bg-card);
+            border-radius: var(--radius-lg);
+            margin-bottom: 24rpx;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16rpx;
+            margin-top: 16rpx;
+        }
+
+        .btn {
+            padding: 24rpx 48rpx;
+            border-radius: 44rpx;
+            font-size: 32rpx;
+            border: none;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .btn:active {
+            opacity: 0.7;
+        }
+
+        .btn-primary {
+            background: linear-gradient(-90deg, var(--color-primary), var(--color-primary-light));
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background: var(--color-bg-card);
+            border: 1rpx solid var(--color-border);
+            color: var(--color-title);
+        }
+
+        .btn-text {
+            background: transparent;
+            color: var(--color-primary);
+        }
+
+        .btn-disabled {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        /* Cards */
+        .card-section {
+            padding: 32rpx;
+            background: var(--color-bg-page);
+            margin-bottom: 24rpx;
+        }
+
+        .tui-card {
+            background: var(--color-bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.08);
+            padding: 24rpx;
+            margin: var(--space-lg);
+        }
+
+        .card-title {
+            font-size: 32rpx;
+            font-weight: 600;
+            color: var(--color-title);
+            margin-bottom: 12rpx;
+        }
+
+        .card-content {
+            font-size: 28rpx;
+            color: var(--color-secondary);
+        }
+
+        /* List Items */
+        .list-section {
+            background: var(--color-bg-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: 24rpx;
+        }
+
+        .tui-list-cell {
+            padding: 24rpx 30rpx;
+            border-bottom: 1rpx solid var(--color-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .tui-list-cell:last-child {
+            border-bottom: none;
+        }
+
+        .list-content {
+            display: flex;
+            align-items: center;
+            gap: 16rpx;
+        }
+
+        .list-icon {
+            width: 80rpx;
+            height: 80rpx;
+            background: var(--color-bg-page);
+            border-radius: var(--radius-base);
+        }
+
+        .list-text h4 {
+            font-size: 28rpx;
+            color: var(--color-title);
+            margin-bottom: 4rpx;
+        }
+
+        .list-text p {
+            font-size: 24rpx;
+            color: var(--color-muted);
+        }
+
+        .arrow {
+            color: var(--color-muted);
+            font-size: 24rpx;
+        }
+
+        /* Form Inputs */
+        .form-section {
+            padding: 32rpx;
+            background: var(--color-bg-card);
+            border-radius: var(--radius-lg);
+            margin-bottom: 24rpx;
+        }
+
+        .form-group {
+            margin-bottom: 24rpx;
+        }
+
+        .form-label {
+            font-size: 28rpx;
+            color: var(--color-title);
+            margin-bottom: 12rpx;
+            display: block;
+        }
+
+        .tui-input {
+            width: 100%;
+            height: 96rpx;
+            padding: 0 24rpx;
+            border: 1rpx solid var(--color-border);
+            border-radius: var(--radius-base);
+            font-size: 28rpx;
+            background: var(--color-bg-card);
+        }
+
+        .tui-input:focus {
+            border-color: var(--color-primary);
+        }
+
+        /* Tags & Badges */
+        .tag-section {
+            padding: 32rpx;
+            background: var(--color-bg-card);
+            border-radius: var(--radius-lg);
+            margin-bottom: 24rpx;
+        }
+
+        .tag-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12rpx;
+            margin-top: 16rpx;
+        }
+
+        .tui-tag {
+            padding: 8rpx 16rpx;
+            border-radius: var(--radius-sm);
+            font-size: 24rpx;
+        }
+
+        .tag-primary {
+            background: rgba(86, 119, 252, 0.1);
+            color: var(--color-primary);
+        }
+
+        .tag-success {
+            background: rgba(25, 190, 107, 0.1);
+            color: var(--color-success);
+        }
+
+        .tag-warning {
+            background: rgba(255, 121, 0, 0.1);
+            color: var(--color-warning);
+        }
+
+        .tag-error {
+            background: rgba(235, 9, 9, 0.1);
+            color: var(--color-error);
+        }
+
+        .tui-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 36rpx;
+            height: 36rpx;
+            padding: 0 10rpx;
+            background: var(--color-error);
+            color: #fff;
+            border-radius: var(--radius-full);
+            font-size: 22rpx;
+            margin-left: 8rpx;
+        }
+
+        /* Dividers */
+        .tui-divider {
+            height: 1rpx;
+            background: var(--color-border);
+            margin: 24rpx 0;
+        }
+
+        /* Spacing Examples */
+        .spacing-section {
+            padding: 32rpx;
+            background: var(--color-bg-card);
+            border-radius: var(--radius-lg);
+            margin-bottom: 24rpx;
+        }
+
+        .spacing-demo {
+            display: flex;
+            align-items: center;
+            gap: 16rpx;
+            margin-bottom: 16rpx;
+        }
+
+        .spacing-box {
+            background: var(--color-primary);
+            opacity: 0.3;
+        }
+
+        .spacing-label {
+            font-size: 24rpx;
+            color: var(--color-muted);
+            min-width: 100rpx;
+        }
+
+        /* Platform Info */
+        .platform-section {
+            padding: 24rpx;
+            background: var(--color-bg-card);
+            border-radius: var(--radius-lg);
+            margin-bottom: 24rpx;
+        }
+
+        .platform-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12rpx 0;
+            border-bottom: 1rpx solid var(--color-border-light);
+        }
+
+        .platform-item:last-child {
+            border-bottom: none;
+        }
+
+        .platform-key {
+            color: var(--color-muted);
+        }
+
+        .platform-value {
+            color: var(--color-title);
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="margin-bottom: 32rpx;">[App Name] - Design System</h1>
+
+    <!-- Typography -->
+    <div class="typography">
+        <h1>Display Title (40rpx)</h1>
+        <h2>Heading H2 (36rpx)</h2>
+        <p>Body Text (28rpx) - Main content of the application</p>
+        <p class="muted">Muted Text (24rpx) - Secondary information, timestamps</p>
+    </div>
+
+    <!-- Colors - Brand -->
+    <div class="color-section">
+        <div class="section-title">Brand Colors</div>
+        <div class="color-grid">
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #5677fc;"></div>
+                <div class="color-info">
+                    <div class="color-name">Primary</div>
+                    <div class="color-value">#5677fc</div>
+                </div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #19be6b;"></div>
+                <div class="color-info">
+                    <div class="color-name">Success</div>
+                    <div class="color-value">#19be6b</div>
+                </div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #ff7900;"></div>
+                <div class="color-info">
+                    <div class="color-name">Warning</div>
+                    <div class="color-value">#ff7900</div>
+                </div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #EB0909;"></div>
+                <div class="color-info">
+                    <div class="color-name">Error</div>
+                    <div class="color-value">#EB0909</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Colors - Text -->
+    <div class="color-section">
+        <div class="section-title">Text Colors</div>
+        <div class="color-grid">
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #333333;"></div>
+                <div class="color-info">
+                    <div class="color-name">Title</div>
+                    <div class="color-value">#333333</div>
+                </div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #555555;"></div>
+                <div class="color-info">
+                    <div class="color-name">Secondary</div>
+                    <div class="color-value">#555555</div>
+                </div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #999999;"></div>
+                <div class="color-info">
+                    <div class="color-name">Muted</div>
+                    <div class="color-value">#999999</div>
+                </div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #bfbfbf;"></div>
+                <div class="color-info">
+                    <div class="color-name">Placeholder</div>
+                    <div class="color-value">#bfbfbf</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Colors - Background -->
+    <div class="color-section">
+        <div class="section-title">Background Colors</div>
+        <div class="color-grid">
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #fafafa; border: 1rpx solid #eaeef1;"></div>
+                <div class="color-info">
+                    <div class="color-name">Page</div>
+                    <div class="color-value">#fafafa</div>
+                </div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #ffffff; border: 1rpx solid #eaeef1;"></div>
+                <div class="color-info">
+                    <div class="color-name">Card</div>
+                    <div class="color-value">#ffffff</div>
+                </div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-preview" style="background: #f1f1f1;"></div>
+                <div class="color-info">
+                    <div class="color-name">Hover</div>
+                    <div class="color-value">#f1f1f1</div>
+                </div>
+            </div>
+            <div class="color-swatch">
+                <div class="color-preview" style="background: rgba(0,0,0,0.4);"></div>
+                <div class="color-info">
+                    <div class="color-name">Mask</div>
+                    <div class="color-value">rgba(0,0,0,0.4)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="button-section">
+        <div class="section-title">Buttons</div>
+        <div class="button-group">
+            <button class="btn btn-primary">Primary Button</button>
+            <button class="btn btn-secondary">Secondary Button</button>
+            <button class="btn btn-text">Text Button</button>
+            <button class="btn btn-primary btn-disabled">Disabled</button>
+        </div>
+    </div>
+
+    <!-- Card -->
+    <div class="card-section">
+        <div class="section-title">Card</div>
+        <div class="tui-card">
+            <div class="card-title">Card Title</div>
+            <div class="card-content">This is the card content area. Cards are used to group related content and actions.</div>
+        </div>
+    </div>
+
+    <!-- List -->
+    <div class="list-section">
+        <div class="section-title" style="padding: 24rpx;">List Items</div>
+        <div class="tui-list-cell">
+            <div class="list-content">
+                <div class="list-icon"></div>
+                <div class="list-text">
+                    <h4>List Item Title</h4>
+                    <p>List item description</p>
+                </div>
+            </div>
+            <span class="arrow">›</span>
+        </div>
+        <div class="tui-list-cell">
+            <div class="list-content">
+                <div class="list-icon"></div>
+                <div class="list-text">
+                    <h4>Another Item</h4>
+                    <p>With badge <span class="tui-badge">3</span></p>
+                </div>
+            </div>
+            <span class="arrow">›</span>
+        </div>
+    </div>
+
+    <!-- Form -->
+    <div class="form-section">
+        <div class="section-title">Form Inputs</div>
+        <div class="form-group">
+            <label class="form-label">Default Input</label>
+            <input type="text" class="tui-input" placeholder="Please enter text...">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Focused Input</label>
+            <input type="text" class="tui-input" value="Focused state" style="border-color: #5677fc;">
+        </div>
+    </div>
+
+    <!-- Tags -->
+    <div class="tag-section">
+        <div class="section-title">Tags & Badges</div>
+        <div class="tag-group">
+            <span class="tui-tag tag-primary">Primary</span>
+            <span class="tui-tag tag-success">Success</span>
+            <span class="tui-tag tag-warning">Warning</span>
+            <span class="tui-tag tag-error">Error</span>
+            <span class="tui-badge">99+</span>
+        </div>
+    </div>
+
+    <!-- Spacing -->
+    <div class="spacing-section">
+        <div class="section-title">Spacing Scale</div>
+        <div class="spacing-demo">
+            <span class="spacing-label">xs (8rpx)</span>
+            <div class="spacing-box" style="width: 8rpx; height: 32rpx;"></div>
+        </div>
+        <div class="spacing-demo">
+            <span class="spacing-label">sm (16rpx)</span>
+            <div class="spacing-box" style="width: 16rpx; height: 32rpx;"></div>
+        </div>
+        <div class="spacing-demo">
+            <span class="spacing-label">base (20rpx)</span>
+            <div class="spacing-box" style="width: 20rpx; height: 32rpx;"></div>
+        </div>
+        <div class="spacing-demo">
+            <span class="spacing-label">lg (24rpx)</span>
+            <div class="spacing-box" style="width: 24rpx; height: 32rpx;"></div>
+        </div>
+        <div class="spacing-demo">
+            <span class="spacing-label">xl (32rpx)</span>
+            <div class="spacing-box" style="width: 32rpx; height: 32rpx;"></div>
+        </div>
+        <div class="spacing-demo">
+            <span class="spacing-label">xxl (48rpx)</span>
+            <div class="spacing-box" style="width: 48rpx; height: 32rpx;"></div>
+        </div>
+    </div>
+
+    <!-- Platform -->
+    <div class="platform-section">
+        <div class="section-title">Platform Adaptation</div>
+        <div class="platform-item">
+            <span class="platform-key">Design Width</span>
+            <span class="platform-value">750rpx</span>
+        </div>
+        <div class="platform-item">
+            <span class="platform-key">Unit</span>
+            <span class="platform-value">rpx</span>
+        </div>
+        <div class="platform-item">
+            <span class="platform-key">Primary Font</span>
+            <span class="platform-value">-apple-system</span>
+        </div>
+        <div class="platform-item">
+            <span class="platform-key">Border Radius Base</span>
+            <span class="platform-value">6rpx</span>
+        </div>
+        <div class="platform-item">
+            <span class="platform-key">Shadow</span>
+            <span class="platform-value">0 2rpx 8rpx rgba(0,0,0,0.08)</span>
+        </div>
+    </div>
+</body>
+</html>

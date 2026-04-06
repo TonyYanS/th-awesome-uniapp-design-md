@@ -1,0 +1,23 @@
+{
+  "name": "th-awesome-uniapp-scripts",
+  "version": "1.0.0",
+  "description": "Scripts for th-awesome-uniapp-design-md",
+  "main": "screenshot-to-designmd.js",
+  "type": "module",
+  "scripts": {
+    "analyze": "node screenshot-to-designmd.js"
+  },
+  "keywords": [
+    "uniapp",
+    "design-system",
+    "design-tokens",
+    "thorui"
+  ],
+  "dependencies": {
+    "@anthropic-ai/sdk": ">=0.20.0",
+    "openai": ">=4.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
